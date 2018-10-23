@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<table border="1" width="400" align="center" id="table">
+		<tr>
+			<th>书的ID</th>
+			<th>书名</th>
+			<th>价格</th>
+			<th>描述</th>
+			<th>INS</th>
+		</tr>
+		
+	</table>
+	<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="node_modules/arttemplate/template-web.js"></script>
+	<script type="text/html" id="tr">
+	<!-- 1.先声明一个引擎模板 -->
+	{{each data as value}}
+	    <tr>
+			<td>{{value.id}}</td>
+			<td>{{value.bookname}}</td>
+			<td>{{value.bookprice}}</td>
+			<td>{{value.bookscript}}</td>
+			<td>{{value.bookcode}}</td>
+		</tr>
+		{{/each}}
+	</script>
+    <script type="text/javascript">
+		$.ajax({
+			url:"http://127.0.0.1:3000/books",
+			success:function (data) {
+				//2.将模板和数据结合生成DOM节点
+				var html=template('tr',{data:data});
+				//3.将DOM节点插入到响应的dom上
+				$('#table').append(html);
+				}
+		})
+	</script>
+</body>
+</html>
